@@ -6,3 +6,4 @@ flask_pymongo
 pymongo
 pyarrow
 xarray
+requests
