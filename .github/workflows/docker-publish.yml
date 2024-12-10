@@ -25,4 +25,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/carminelau/Docker_image_MultiSorgente:latest
+          tags: ghcr.io/carminelau/docker_image_multiSorgente:latest
