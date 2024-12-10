@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Installa le dipendenze specificate in requirements.txt (se presente)
-RUN if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+RUN python -m pip install -r requirements.txt
 
 EXPOSE 5000
 
