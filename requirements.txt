@@ -1,0 +1,8 @@
+pandas
+geopy
+turfpy
+flask
+flask_pymongo
+pymongo
+pyarrow
+xarray
