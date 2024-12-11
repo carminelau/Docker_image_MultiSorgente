@@ -7,6 +7,8 @@ WORKDIR /app
 # Copia solo il file requirements.txt, se disponibile
 COPY requirements.txt .
 
+COPY utils.py .
+
 # Installa le dipendenze specificate in requirements.txt (se presente)
 RUN python -m pip install -r requirements.txt
 
