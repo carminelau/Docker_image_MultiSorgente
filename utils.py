@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+import datetime
 import pandas as pd
 
 # def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, hour_timedelta: int):
