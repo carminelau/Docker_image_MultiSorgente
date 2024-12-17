@@ -10,6 +10,15 @@ COPY requirements.txt .
 # Copia il file utils.py nella directory /app
 COPY utils.py .
 
+# Copia il file databases.py nella directory /app
+COPY databases.py .
+
+# Copia il file config.py nella directory /app
+COPY config.py .
+
+# Copia il file Geobap.py nella directory /app
+COPY Geobap.py .
+
 # Installa le dipendenze specificate in requirements.txt
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
