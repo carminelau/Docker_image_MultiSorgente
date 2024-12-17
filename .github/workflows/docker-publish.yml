@@ -26,6 +26,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: file_docker/.
+          context: /file_docker/.
           push: true
           tags: ghcr.io/carminelau/docker_image_multisorgente:latest
