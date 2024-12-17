@@ -2,10 +2,7 @@ from geopy import distance
 import numpy as np
 from turfpy.measurement import boolean_point_in_polygon, bbox
 from turfpy.meta import feature_each
-from geojson import Point, MultiPolygon, Feature
-import turfpy as turf 
-import json
-import requests
+from geojson import Point
 from databases import world, region, province, municipality, squares
 
 class Geobap:

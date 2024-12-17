@@ -1,4 +1,4 @@
-from configs import mongo,mongonew
+from configs import mongo
 
 historical=mongo.historical_raw_data #raw data senza expire
 raw=mongo.raw_data
@@ -75,9 +75,6 @@ sqrhourly=mongo.square_hourly_avg
 
 comminute=mongo.municipality_minute_avg
 sqrminute=mongo.square_minute_avg
-
-capocchia = mongo.capocchia
-capocchianew = mongonew.capocchia
 
 raw.create_index("timestamp", expireAfterSeconds=7776000)
 
