@@ -4,10 +4,16 @@ mongo_host = "mongo_multisorgente"
 mongo_port = 27017
 mongo_user = "multisorgente"
 mongo_password = "multisorgente"
-mongo_auth_db = "MS"
+mongo_db_MS = "MS"
+mongo_db_SSDB = "SSDB"
 
-connection_string = (
-    f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/{mongo_auth_db}?authSource=admin"
+connection_string_MS = (
+    f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/{mongo_db_MS}?authSource=admin"
 )
 
-mongo = MongoClient(connection_string)[mongo_auth_db]
+connection_string_SSDB = (
+    f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/{mongo_db_SSDB}?authSource=admin"
+)
+
+mongo_MS = MongoClient(connection_string_MS)[mongo_db_MS]
+mongo_SSDB = MongoClient(connection_string_SSDB)[mongo_db_SSDB]

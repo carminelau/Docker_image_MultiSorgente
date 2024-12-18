@@ -1,86 +1,88 @@
-from configs import mongo
+from configs import mongo_MS, mongo_SSDB
 
-historical=mongo.historical_raw_data #raw data senza expire
-raw=mongo.raw_data
-multipos=mongo.multisorgente_position #informazioni geo-spaziali dati multisorgente
-copernicus=mongo.copernicus_position #informazioni geo-spaziali dati copernicus
-sensorcommunity = mongo.sensorcommunity_position #informazioni geo-spaziali dati sensorcommunity
-citta_square = mongo.citta_square #informazioni geo-spaziali dati square
-windy_data = mongo.windy_data #informazioni geo-spaziali dati windy
+historical=mongo_SSDB.historical_raw_data #raw data senza expire
+raw=mongo_SSDB.raw_data
+multipos=mongo_SSDB.multisorgente_position #informazioni geo-spaziali dati multisorgente
+copernicus=mongo_SSDB.copernicus_position #informazioni geo-spaziali dati copernicus
+sensorcommunity = mongo_SSDB.sensorcommunity_position #informazioni geo-spaziali dati sensorcommunity
+citta_square = mongo_SSDB.citta_square #informazioni geo-spaziali dati square
+windy_data = mongo_SSDB.windy_data #informazioni geo-spaziali dati windy
 
-cache_openmeteo=mongo.cache_openmeteo #cache dati openmeteo
-cache_openmeteo_agg=mongo.cache_openmeteo_agg #cache dati openmeteo aggregati
-prev_openmeteo_giorno=mongo.prev_openmeteo_giorno #previsioni openmeteo per giorno
-prev_openmeteo_ora=mongo.prev_openmeteo_ora #previsioni openmeteo per ora
+cache_openmeteo=mongo_SSDB.cache_openmeteo #cache dati openmeteo
+cache_openmeteo_agg=mongo_SSDB.cache_openmeteo_agg #cache dati openmeteo aggregati
+prev_openmeteo_giorno=mongo_SSDB.prev_openmeteo_giorno #previsioni openmeteo per giorno
+prev_openmeteo_ora=mongo_SSDB.prev_openmeteo_ora #previsioni openmeteo per ora
 
-cha=mongo.centraline_hourly_avg #medie orarie per centraline
-hcha=mongo.historical_centraline_hourly_avg #medie orarie per centraline senza expire
-cda=mongo.centraline_daily_avg #medie giornaliere per centraline
-hcda=mongo.historical_centraline_daily_avg #medie giornaliere per centraline senza expire
+cha=mongo_SSDB.centraline_hourly_avg #medie orarie per centraline
+hcha=mongo_SSDB.historical_centraline_hourly_avg #medie orarie per centraline senza expire
+cda=mongo_SSDB.centraline_daily_avg #medie giornaliere per centraline
+hcda=mongo_SSDB.historical_centraline_daily_avg #medie giornaliere per centraline senza expire
 
-muniha=mongo.municipality_hourly_avg #medie orarie per comune
-hmuniha=mongo.historical_municipality_hourly_avg #medie orarie per comune senza expire
-munida=mongo.municipality_daily_avg #medie giornaliere per comune
-hmunida=mongo.historical_municipality_daily_avg #medie giornaliere per comune senza expire
-munima=mongo.municipality_minute_avg #medie per minuto per comune
-hmunima=mongo.historical_municipality_minute_avg #medie per minuto per comune senza expire
-muniia=mongo.municipality_instant_avg #medie 5 minuti precedenti per comune
+muniha=mongo_SSDB.municipality_hourly_avg #medie orarie per comune
+hmuniha=mongo_SSDB.historical_municipality_hourly_avg #medie orarie per comune senza expire
+munida=mongo_SSDB.municipality_daily_avg #medie giornaliere per comune
+hmunida=mongo_SSDB.historical_municipality_daily_avg #medie giornaliere per comune senza expire
+munima=mongo_SSDB.municipality_minute_avg #medie per minuto per comune
+hmunima=mongo_SSDB.historical_municipality_minute_avg #medie per minuto per comune senza expire
+muniia=mongo_SSDB.municipality_instant_avg #medie 5 minuti precedenti per comune
 
-kha=mongo.square_hourly_avg #medie orarie per square
-hkha=mongo.historical_square_hourly_avg #medie orarie per square senza expire
-kda=mongo.square_daily_avg #medie giornaliere per square
-hkda=mongo.historical_square_daily_avg #medie giornaliere per square senza expire
-kma=mongo.square_minute_avg #medie per minuto per square
-hkma=mongo.historical_square_minute_avg #medie per minuto per square senza expire
-kia=mongo.square_instant_avg #medie 5 minuti precedenti per square
+kha=mongo_SSDB.square_hourly_avg #medie orarie per square
+hkha=mongo_SSDB.historical_square_hourly_avg #medie orarie per square senza expire
+kda=mongo_SSDB.square_daily_avg #medie giornaliere per square
+hkda=mongo_SSDB.historical_square_daily_avg #medie giornaliere per square senza expire
+kma=mongo_SSDB.square_minute_avg #medie per minuto per square
+hkma=mongo_SSDB.historical_square_minute_avg #medie per minuto per square senza expire
+kia=mongo_SSDB.square_instant_avg #medie 5 minuti precedenti per square
 
-provha=mongo.province_hourly_avg #medie orarie per provincia
-hprovha=mongo.historical_province_hourly_avg #medie orarie per provincia senza expire
-provda=mongo.province_daily_avg #medie giornaliere per provincia
-hprovda=mongo.historical_province_daily_avg #medie giornaliere per provincia senza expire
-provia=mongo.province_instant_avg #medie 5 minuti precedenti per provincia
+provha=mongo_SSDB.province_hourly_avg #medie orarie per provincia
+hprovha=mongo_SSDB.historical_province_hourly_avg #medie orarie per provincia senza expire
+provda=mongo_SSDB.province_daily_avg #medie giornaliere per provincia
+hprovda=mongo_SSDB.historical_province_daily_avg #medie giornaliere per provincia senza expire
+provia=mongo_SSDB.province_instant_avg #medie 5 minuti precedenti per provincia
 
-regionha=mongo.region_hourly_avg #medie orarie per regione
-hregionha=mongo.historical_region_hourly_avg #medie orarie per regione senza expire
-regionda=mongo.region_daily_avg #medie giornaliere per regione
-hregionda=mongo.historical_region_daily_avg #medie giornaliere per regione senza expire
-regionia=mongo.region_instant_avg #medie 5 minuti precedenti per regione
+regionha=mongo_SSDB.region_hourly_avg #medie orarie per regione
+hregionha=mongo_SSDB.historical_region_hourly_avg #medie orarie per regione senza expire
+regionda=mongo_SSDB.region_daily_avg #medie giornaliere per regione
+hregionda=mongo_SSDB.historical_region_daily_avg #medie giornaliere per regione senza expire
+regionia=mongo_SSDB.region_instant_avg #medie 5 minuti precedenti per regione
 
-stateha=mongo.state_hourly_avg #medie orarie per nazione
-hstateha=mongo.historical_state_hourly_avg #medie orarie per nazione senza expire
-stateda=mongo.state_daily_avg #medie giornaliere per nazione
-hstateda=mongo.historical_state_daily_avg #medie giornaliere per nazione senza expire
-stateia=mongo.state_instant_avg #medie 5 minuti precedenti per nazione
+stateha=mongo_SSDB.state_hourly_avg #medie orarie per nazione
+hstateha=mongo_SSDB.historical_state_hourly_avg #medie orarie per nazione senza expire
+stateda=mongo_SSDB.state_daily_avg #medie giornaliere per nazione
+hstateda=mongo_SSDB.historical_state_daily_avg #medie giornaliere per nazione senza expire
+stateia=mongo_SSDB.state_instant_avg #medie 5 minuti precedenti per nazione
 
-world=mongo.world_geojson
-region=mongo.region_geojson
-province=mongo.province_geojson
-municipality=mongo.municipality_geojson
-square=mongo.square_geojson
+world=mongo_SSDB.world_geojson
+region=mongo_SSDB.region_geojson
+province=mongo_SSDB.province_geojson
+municipality=mongo_SSDB.municipality_geojson
+square=mongo_SSDB.square_geojson
 
-world_hd=mongo.world_geojson_hd
-region_hd=mongo.region_geojson_hd
-province_hd=mongo.province_geojson_hd
-municipality_hd=mongo.municipality_geojson_hd
-square_hd=mongo.square_geojson_hd
+world_hd=mongo_SSDB.world_geojson_hd
+region_hd=mongo_SSDB.region_geojson_hd
+province_hd=mongo_SSDB.province_geojson_hd
+municipality_hd=mongo_SSDB.municipality_geojson_hd
+square_hd=mongo_SSDB.square_geojson_hd
 
-keyW=mongo.sensors
-keyR=mongo.users
+keyW=mongo_SSDB.sensors
+keyR=mongo_SSDB.users
 
-nazdaily=mongo.state_daily_avg
-regdaily=mongo.region_daily_avg
-prodaily=mongo.province_daily_avg
-comdaily=mongo.municipality_daily_avg
-sqrdaily=mongo.square_daily_avg
+nazdaily=mongo_SSDB.state_daily_avg
+regdaily=mongo_SSDB.region_daily_avg
+prodaily=mongo_SSDB.province_daily_avg
+comdaily=mongo_SSDB.municipality_daily_avg
+sqrdaily=mongo_SSDB.square_daily_avg
 
-nazhourly=mongo.state_hourly_avg
-reghourly=mongo.region_hourly_avg
-prohourly=mongo.province_hourly_avg
-comhourly=mongo.municipality_hourly_avg
-sqrhourly=mongo.square_hourly_avg
+nazhourly=mongo_SSDB.state_hourly_avg
+reghourly=mongo_SSDB.region_hourly_avg
+prohourly=mongo_SSDB.province_hourly_avg
+comhourly=mongo_SSDB.municipality_hourly_avg
+sqrhourly=mongo_SSDB.square_hourly_avg
 
-comminute=mongo.municipality_minute_avg
-sqrminute=mongo.square_minute_avg
+comminute=mongo_SSDB.municipality_minute_avg
+sqrminute=mongo_SSDB.square_minute_avg
+
+msp_coll = mongo_MS.milano_smart_park
 
 raw.create_index("timestamp", expireAfterSeconds=7776000)
 
