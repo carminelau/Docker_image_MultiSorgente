@@ -56,7 +56,13 @@ world=mongo.world_geojson
 region=mongo.region_geojson
 province=mongo.province_geojson
 municipality=mongo.municipality_geojson
-squares=mongo.square_geojson
+square=mongo.square_geojson
+
+world_hd=mongo.world_geojson_hd
+region_hd=mongo.region_geojson_hd
+province_hd=mongo.province_geojson_hd
+municipality_hd=mongo.municipality_geojson_hd
+square_hd=mongo.square_geojson_hd
 
 keyW=mongo.sensors
 keyR=mongo.users

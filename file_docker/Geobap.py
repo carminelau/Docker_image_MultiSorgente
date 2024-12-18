@@ -1,9 +1,7 @@
-from geopy import distance
-import numpy as np
 from turfpy.measurement import boolean_point_in_polygon, bbox
 from turfpy.meta import feature_each
 from geojson import Point
-from databases import world, region, province, municipality, squares
+from databases import world_hd, region_hd, province_hd, municipality_hd, square, world, region, province, municipality, square_hd
 
 class Geobap:
 
@@ -19,9 +17,9 @@ class Geobap:
 
     # Esegue il geodecode su più livello (in base al livello di zoom richiesto)
     @staticmethod
-    def geoinfo_base(lat, lon, zoom):
+    def geoinfo_old(lat, lon, zoom):
         if zoom < 0 or zoom > 4:
-            return {"error": "Unable to geodecode"}
+            return None
         result = {}
         geo = Geobap()
         for i in range(0, zoom+1):
@@ -32,51 +30,45 @@ class Geobap:
                 myjson = {"error": "Unable to geodecode"}
                 return myjson
         return result
-
+    
     @staticmethod
     def geoinfo(lat, lon, zoom):
-        places = {}
-        squareID = None
-        geo = Geobap.geoinfo_base(lat, lon, zoom)
-        if "error" in geo.keys():
-            square_trovati = {}
-            for i in np.arange(-0.0105, 0.012, 0.0105):
-                for j in np.arange(-0.0105, 0.012, 0.0105):
-                    geo = Geobap.geoinfo_base(lat + i, lon + j, 4)
-                    if "squareID" in geo:
-                        places[geo["squareID"]] = geo
-                        if geo["provincia"] in square_trovati:
-                            if geo["comune"] in square_trovati[geo["provincia"]]:
-                                square_trovati[geo["provincia"]][geo["comune"]].append(geo["squareID"])
-                            else:
-                                square_trovati[geo["provincia"]][geo["comune"]] = [geo["squareID"]]
-                        else:
-                            square_trovati[geo["provincia"]] = {geo["comune"]: [geo["squareID"]]}
-            dis = 99999
-
-            for prov in square_trovati:
-                sqs = squares.find_one({"prov": prov})
-                for com in square_trovati[prov]:
-                    for s in sqs["comuni"][com]["features"]:
-                        if s["properties"]["name"] in square_trovati[prov][com]:
-                            coordinates = s["bbox"]
-                            lat_square = (coordinates[1] + coordinates[3])/2
-                            lon_square = (coordinates[0] + coordinates[2])/2
-                            new_dis = distance.distance((lat, lon), (lat_square, lon_square), ellipsoid='WGS-84').m
-                            if new_dis < dis:
-                                squareID = s["properties"]["name"]
-                                dis = new_dis
-
-        else:
-            squareID = geo["squareID"]
-            places[squareID] = geo
-
-        if squareID != None:
-            result = places[squareID]
-        else:
+        if zoom < 0 or zoom > 4:
             result = {"error": "Unable to geodecode"}
+        result = {}
+        query = {"geometry": {"$geoIntersects": {"$geometry": {"type": "Point", "coordinates": [lon, lat]}}}}
+        if zoom >= 0:
+            naz = world_hd.find_one(query,{"naz_name":1, "_id":0})
+            if naz != None:
+                result["nazione"] = naz["naz_name"]
+            else:
+                result = {"error": "Unable to geodecode"}
+            if zoom >= 1:
+                reg = region_hd.find_one(query,{"properties":1, "_id":0})
+                if reg != None:
+                    result["regione"] = reg["properties"]["name"]
+                else:
+                    result = {"error": "Unable to geodecode"}
+                if zoom >= 2:
+                    prov = province_hd.find_one(query,{"properties":1, "_id":0})
+                    if prov != None:
+                        result["provincia"] = prov["properties"]["name"]
+                    else:
+                        result = {"error": "Unable to geodecode"}
+                    if zoom >= 3:
+                        com = municipality_hd.find_one(query,{"properties":1, "_id":0})
+                        if com != None:
+                            result["comune"] = com["properties"]["name"]
+                        else:
+                            result = {"error": "Unable to geodecode"}
+                        if zoom == 4:
+                            square = square_hd.find_one(query,{"properties":1, "_id":0})
+                            if square != None:
+                                result["squareID"] = square["properties"]["name"]
+                            else:
+                                result = {"error": "Unable to geodecode"}
+
         return result
-    
 
     # Esegue il geodecode su un solo livello
     def geodecode(self, lat, lon):
@@ -160,7 +152,7 @@ class Geobap:
     # Restituisce il geojson da usare in base al livello di zoom
     @staticmethod
     def getGeojson(zoom, params=None):
-        collections = [world, region, province, municipality, squares]
+        collections = [world, region, province, municipality, square]
         query = ["None", "naz_name", "reg_name", "prov_name", "prov"]
         req_form = {}
         if(params != None):
@@ -182,5 +174,4 @@ class Geobap:
 
 # Main di test della libreria
 if __name__ == "__main__":
-    print(Geobap.geoinfo(40.6755282563532, 14.768886566162111,4))
-    #40.946115837367785, 14.37039205328215
+    print(Geobap.geoinfo(39.251333, 11.547637, 4))
