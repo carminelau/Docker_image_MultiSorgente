@@ -20,6 +20,8 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
     # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista delle nazioni e la fonte
     result = agg(datastart.replace(hour=0, minute=0, second=0,
                  microsecond=0), "daily", 0, lista_nazioni, fonte)
+    
+    stringa_1, stringa_2 = "", ""
 
     for key in result["daily"].keys():  # per ogni chiave del dizionario
         n_dati = len(result["daily"][key])  # calcolo il numero di dati
