@@ -24,7 +24,7 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
     for key in result["daily"].keys():  # per ogni chiave del dizionario
         n_dati = len(result["daily"][key])  # calcolo il numero di dati
         # stampa di controllo
-        print("{} - {}: #dati: {}".format(key, "daily", n_dati))
+        stringa_1 = "{} - {}: #dati: {}".format(key, "daily", n_dati)
         if key == "nazione":  # se la chiave è nazione
             # inserisco i dati nel database
             nazdaily.insert_many(result["daily"][key])
@@ -48,7 +48,7 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
         for key in result[t].keys():  # per ogni chiave del dizionario
             n_dati = len(result[t][key])  # calcolo il numero di dati
             # stampa di controllo
-            print("{} - {}: #dati: {}".format(key, t, n_dati))
+            stringa_2 = "{} - {}: #dati: {}".format(key, t, n_dati)
             if t == "hourly":  # se l'aggregazione è oraria
                 if key == "nazione":  # se la chiave è nazione
                     # inserisco i dati nel database
@@ -72,6 +72,8 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
                 elif key == "squareID":  # se la chiave è squareID
                     # inserisco i dati nel database
                     sqrminute.insert_many(result[t][key])
+
+    return stringa_1, stringa_2
 
 def invioMongo(lista, f):
     l = pla(f)
