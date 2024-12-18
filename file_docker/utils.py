@@ -1,5 +1,6 @@
 import datetime
 import pandas as pd
+from mongo_placer import pla
 
 # def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, hour_timedelta: int):
 #     """
@@ -70,6 +71,12 @@ import pandas as pd
 #                 elif key == "squareID":  # se la chiave è squareID
 #                     # inserisco i dati nel database
 #                     sqrminute.insert_many(result[t][key])
+
+def invioMongo(lista, f):
+    l = pla(f)
+    for naz in l:
+        if naz not in lista:
+            lista.append(naz)
 
 def controllo_pm(pm1: float, pm25: float, pm10: float):
     """
