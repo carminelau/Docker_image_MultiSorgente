@@ -15,5 +15,8 @@ connection_string_SSDB = (
     f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/{mongo_db_SSDB}?authSource=admin"
 )
 
+connection_string = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/?authSource=admin"
+
 mongo_MS = MongoClient(connection_string_MS)[mongo_db_MS]
 mongo_SSDB = MongoClient(connection_string_SSDB)[mongo_db_SSDB]
+mongo_generico = MongoClient(connection_string)
