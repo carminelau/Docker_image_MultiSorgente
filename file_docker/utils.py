@@ -1,76 +1,77 @@
 import datetime
 import pandas as pd
-from mongo_placer import pla
+from mongo_placer import pla, agg
+from databases import *
 
-# def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, hour_timedelta: int):
-#     """
-#     Funzione per aggregare i dati di una fonte in un determinato giorno e inserirli nel database, viene eseguita ogni fine estrazione dati dalle fonti. Esegue la agg con la data attuale e l'ora 00:00:00 per inserire le medie giornaliere,
-#     e poi esegue la agg con la data attuale e l'ora attuale meno hour_timedelta per inserire le medie orarie e minute.
+def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, hour_timedelta: int):
+    """
+    Funzione per aggregare i dati di una fonte in un determinato giorno e inserirli nel database, viene eseguita ogni fine estrazione dati dalle fonti. Esegue la agg con la data attuale e l'ora 00:00:00 per inserire le medie giornaliere,
+    e poi esegue la agg con la data attuale e l'ora attuale meno hour_timedelta per inserire le medie orarie e minute.
 
-#     Args:
-#     datastart (datetime): The starting date and time to aggregate data.
-#     lista_nazioni (list[str]): The list of nations to aggregate data for.
-#     fonte (str): The source to aggregate data from.
-#     hour_timedelta (int): The number of hours to subtract from the current time to aggregate hourly and minute data.
+    Args:
+    datastart (datetime): The starting date and time to aggregate data.
+    lista_nazioni (list[str]): The list of nations to aggregate data for.
+    fonte (str): The source to aggregate data from.
+    hour_timedelta (int): The number of hours to subtract from the current time to aggregate hourly and minute data.
 
-#     Returns:
-#     None
-#     """
-#     # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista delle nazioni e la fonte
-#     result = agg(datastart.replace(hour=0, minute=0, second=0,
-#                  microsecond=0), "daily", 0, lista_nazioni, fonte)
+    Returns:
+    None
+    """
+    # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista delle nazioni e la fonte
+    result = agg(datastart.replace(hour=0, minute=0, second=0,
+                 microsecond=0), "daily", 0, lista_nazioni, fonte)
 
-#     for key in result["daily"].keys():  # per ogni chiave del dizionario
-#         n_dati = len(result["daily"][key])  # calcolo il numero di dati
-#         # stampa di controllo
-#         print("{} - {}: #dati: {}".format(key, "daily", n_dati))
-#         if key == "nazione":  # se la chiave è nazione
-#             # inserisco i dati nel database
-#             nazdaily.insert_many(result["daily"][key])
-#         elif key == "regione":  # se la chiave è regione
-#             # inserisco i dati nel database
-#             regdaily.insert_many(result["daily"][key])
-#         elif key == "provincia":  # se la chiave è provincia
-#             # inserisco i dati nel database
-#             prodaily.insert_many(result["daily"][key])
-#         elif key == "comune":  # se la chiave è comune
-#             # inserisco i dati nel database
-#             comdaily.insert_many(result["daily"][key])
-#         elif key == "squareID":  # se la chiave è squareID
-#             # inserisco i dati nel database
-#             sqrdaily.insert_many(result["daily"][key])
+    for key in result["daily"].keys():  # per ogni chiave del dizionario
+        n_dati = len(result["daily"][key])  # calcolo il numero di dati
+        # stampa di controllo
+        print("{} - {}: #dati: {}".format(key, "daily", n_dati))
+        if key == "nazione":  # se la chiave è nazione
+            # inserisco i dati nel database
+            nazdaily.insert_many(result["daily"][key])
+        elif key == "regione":  # se la chiave è regione
+            # inserisco i dati nel database
+            regdaily.insert_many(result["daily"][key])
+        elif key == "provincia":  # se la chiave è provincia
+            # inserisco i dati nel database
+            prodaily.insert_many(result["daily"][key])
+        elif key == "comune":  # se la chiave è comune
+            # inserisco i dati nel database
+            comdaily.insert_many(result["daily"][key])
+        elif key == "squareID":  # se la chiave è squareID
+            # inserisco i dati nel database
+            sqrdaily.insert_many(result["daily"][key])
 
-#     # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista dei punti di Copernicus e la fonte
-#     result = agg(datastart.replace(hour=(datastart-timedelta(hours=hour_timedelta)
-#                                             ).hour, minute=0, second=0, microsecond=0), "hourly", hour_timedelta, lista_nazioni, fonte)
-#     for t in ["hourly", "minute"]:  # per ogni tipo di aggregazione
-#         for key in result[t].keys():  # per ogni chiave del dizionario
-#             n_dati = len(result[t][key])  # calcolo il numero di dati
-#             # stampa di controllo
-#             print("{} - {}: #dati: {}".format(key, t, n_dati))
-#             if t == "hourly":  # se l'aggregazione è oraria
-#                 if key == "nazione":  # se la chiave è nazione
-#                     # inserisco i dati nel database
-#                     nazhourly.insert_many(result[t][key])
-#                 elif key == "regione":  # se la chiave è regione
-#                     # inserisco i dati nel database
-#                     reghourly.insert_many(result[t][key])
-#                 elif key == "provincia":  # se la chiave è provincia
-#                     # inserisco i dati nel database
-#                     prohourly.insert_many(result[t][key])
-#                 elif key == "comune":  # se la chiave è comune
-#                     # inserisco i dati nel database
-#                     comhourly.insert_many(result[t][key])
-#                 elif key == "squareID":  # se la chiave è squareID
-#                     # inserisco i dati nel database
-#                     sqrhourly.insert_many(result[t][key])
-#             elif t == "minute":  # se l'aggregazione è minute
-#                 if key == "comune":  # se la chiave è comune
-#                     # inserisco i dati nel database
-#                     comminute.insert_many(result[t][key])
-#                 elif key == "squareID":  # se la chiave è squareID
-#                     # inserisco i dati nel database
-#                     sqrminute.insert_many(result[t][key])
+    # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista dei punti di Copernicus e la fonte
+    result = agg(datastart.replace(hour=(datastart-datetime.timedelta(hours=hour_timedelta)
+                                            ).hour, minute=0, second=0, microsecond=0), "hourly", hour_timedelta, lista_nazioni, fonte)
+    for t in ["hourly", "minute"]:  # per ogni tipo di aggregazione
+        for key in result[t].keys():  # per ogni chiave del dizionario
+            n_dati = len(result[t][key])  # calcolo il numero di dati
+            # stampa di controllo
+            print("{} - {}: #dati: {}".format(key, t, n_dati))
+            if t == "hourly":  # se l'aggregazione è oraria
+                if key == "nazione":  # se la chiave è nazione
+                    # inserisco i dati nel database
+                    nazhourly.insert_many(result[t][key])
+                elif key == "regione":  # se la chiave è regione
+                    # inserisco i dati nel database
+                    reghourly.insert_many(result[t][key])
+                elif key == "provincia":  # se la chiave è provincia
+                    # inserisco i dati nel database
+                    prohourly.insert_many(result[t][key])
+                elif key == "comune":  # se la chiave è comune
+                    # inserisco i dati nel database
+                    comhourly.insert_many(result[t][key])
+                elif key == "squareID":  # se la chiave è squareID
+                    # inserisco i dati nel database
+                    sqrhourly.insert_many(result[t][key])
+            elif t == "minute":  # se l'aggregazione è minute
+                if key == "comune":  # se la chiave è comune
+                    # inserisco i dati nel database
+                    comminute.insert_many(result[t][key])
+                elif key == "squareID":  # se la chiave è squareID
+                    # inserisco i dati nel database
+                    sqrminute.insert_many(result[t][key])
 
 def invioMongo(lista, f):
     l = pla(f)
