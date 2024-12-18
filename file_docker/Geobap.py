@@ -174,4 +174,4 @@ class Geobap:
 
 # Main di test della libreria
 if __name__ == "__main__":
-    print(Geobap.geoinfo(39.251333, 11.547637, 4))
+    print(Geobap.geoinfo(40.776896,14.7870521, 4))
