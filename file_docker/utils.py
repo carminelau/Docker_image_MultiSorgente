@@ -20,6 +20,22 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
     # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista delle nazioni e la fonte
     result = agg(datastart.replace(hour=0, minute=0, second=0,
                  microsecond=0), "daily", 0, lista_nazioni, fonte)
+
+    with open("log_agg_data_fonte.txt", "a") as f:
+        
+        f.write("Aggregazione giornaliera\n")
+        f.write("Data: {}\n".format(datastart))
+        f.write("Fonte: {}\n".format(fonte))
+        f.write("Nazioni: {}\n".format(lista_nazioni))
+        f.write("\n")
+
+        #mettere anche result["daily"] in un file di log
+        f.write(len(result["daily"]["nazione"]) + "\n")
+        f.write(len(result["daily"]["regione"]) + "\n")
+        f.write(len(result["daily"]["provincia"]) + "\n")
+        f.write(len(result["daily"]["comune"]) + "\n")
+        f.write(len(result["daily"]["squareID"]) + "\n")
+
     
     stringa_1, stringa_2 = "", ""
 
@@ -46,6 +62,27 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
     # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista dei punti di Copernicus e la fonte
     result = agg(datastart.replace(hour=(datastart-datetime.timedelta(hours=hour_timedelta)
                                             ).hour, minute=0, second=0, microsecond=0), "hourly", hour_timedelta, lista_nazioni, fonte)
+
+    with open("log_agg_data_fonte.txt", "a") as f:
+
+        f.write("Aggregazione oraria e minuti\n")
+        f.write("Data: {}\n".format(datastart))
+        f.write("Fonte: {}\n".format(fonte))
+        f.write("Nazioni: {}\n".format(lista_nazioni))
+        f.write("\n")
+
+        #mettere anche result["hourly"] e result["minute"] in un file di log
+        f.write("Aggregazione oraria\n")
+        f.write(len(result["hourly"]["nazione"]) + "\n")
+        f.write(len(result["hourly"]["regione"]) + "\n")
+        f.write(len(result["hourly"]["provincia"]) + "\n")
+        f.write(len(result["hourly"]["comune"]) + "\n")
+        f.write(len(result["hourly"]["squareID"]) + "\n")
+
+        f.write("Aggregazione minuti\n")
+        f.write(len(result["minute"]["comune"]) + "\n")
+        f.write(len(result["minute"]["squareID"]) + "\n")
+
     for t in ["hourly", "minute"]:  # per ogni tipo di aggregazione
         for key in result[t].keys():  # per ogni chiave del dizionario
             n_dati = len(result[t][key])  # calcolo il numero di dati
