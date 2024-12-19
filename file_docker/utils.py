@@ -73,15 +73,15 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
 
         #mettere anche result["hourly"] e result["minute"] in un file di log
         f.write("Aggregazione oraria\n")
-        f.write(f'{len(result['hourly']['nazione'])}\n')
-        f.write(f'{len(result['hourly']['regione'])}\n')
-        f.write(f'{len(result['hourly']['provincia'])}\n')
-        f.write(f'{len(result['hourly']['comune'])}\n')
-        f.write(f'{len(result['hourly']['squareID'])}\n')
+        f.write(f'{len(result["hourly"]["nazione"])}\n')
+        f.write(f'{len(result["hourly"]["regione"])}\n')
+        f.write(f'{len(result["hourly"]["provincia"])}\n')
+        f.write(f'{len(result["hourly"]["comune"])}\n')
+        f.write(f'{len(result["hourly"]["squareID"])}\n')
 
         f.write("Aggregazione minuti\n")
-        f.write(f'{len(result['minute']['comune'])}\n')
-        f.write(f'{len(result['minute']['squareID'])}\n')
+        f.write(f'{len(result["minute"]["comune"])}\n')
+        f.write(f'{len(result["minute"]["squareID"])}\n')
     
 
     for t in ["hourly", "minute"]:  # per ogni tipo di aggregazione
