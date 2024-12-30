@@ -10,6 +10,9 @@ COPY . .
 # Installa le dipendenze specificate in requirements.txt
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
+#muovi il file .cdsapirc nella cartella /home
+RUN mv .cdsapirc /home
+
 # Espone la porta 5000
 EXPOSE 5000
 
