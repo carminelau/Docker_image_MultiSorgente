@@ -11,10 +11,10 @@ COPY . .
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
 #muovi il file .cdsapirc nella cartella /home
-RUN mv .cdsapirc /home
+RUN cp .cdsapirc /home
 
 # Espone la porta 5000
 EXPOSE 5000
 
 # Comando di default: avvia una shell Python interattiva
-CMD ["python"]
+CMD ["python", "cp"]
