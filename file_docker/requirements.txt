@@ -11,3 +11,4 @@ numpy
 geojson
 cdsapi
 scipy
+netCDF4
