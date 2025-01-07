@@ -83,6 +83,7 @@ comminute=mongo_SSDB.municipality_minute_avg
 sqrminute=mongo_SSDB.square_minute_avg
 
 msp_coll = mongo_MS.milano_smart_park
+eea_coll = mongo_MS.eea
 
 raw.create_index("timestamp", expireAfterSeconds=7776000)
 
