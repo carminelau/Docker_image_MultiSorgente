@@ -1,20 +1,24 @@
-# Usa un'immagine di base Python ufficiale
 FROM python:3.11-slim
 
-# Imposta la directory di lavoro
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    CDSAPI_RC=/home/appuser/.cdsapirc
+
 WORKDIR /app
 
-# Copia il file requirements.txt (se disponibile)
+COPY requirements.txt .
+RUN python -m pip install --upgrade pip \
+    && python -m pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Installa le dipendenze specificate in requirements.txt
-RUN python -m pip install --no-cache-dir -r requirements.txt
+RUN adduser --disabled-password --gecos "" appuser \
+    && chown -R appuser:appuser /app \
+    && if [ -f .cdsapirc ]; then cp .cdsapirc /home/appuser/.cdsapirc && chown appuser:appuser /home/appuser/.cdsapirc; fi
 
-# copiare il file .cdsapirc in /root/.cdsapirc
-COPY .cdsapirc /root/.cdsapirc
+USER appuser
 
-# Espone la porta 5000
 EXPOSE 5000
 
-# Comando di default: avvia una shell Python interattiva
 CMD ["python"]

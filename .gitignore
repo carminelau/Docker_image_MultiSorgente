@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.log
+log.txt
+log_agg_data_fonte.txt

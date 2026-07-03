@@ -2,6 +2,7 @@ import datetime
 import pandas as pd
 from mongo_placer import pla, agg
 from databases import *
+from settings import DRY_RUN
 
 def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, hour_timedelta: int):
     """
@@ -17,6 +18,13 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
     Returns:
     None
     """
+    if DRY_RUN:
+        msg = f"DRY_RUN aggregazione saltata fonte={fonte} nazioni={lista_nazioni}"
+        with open("log_agg_data_fonte.txt", "a") as f:
+            f.write(msg + "\n")
+        print(msg, flush=True)
+        return msg, msg
+
     # richiamo la funzione per aggregare i dati specificando la data e ora attuale, la lista delle nazioni e la fonte
     result = agg(datastart.replace(hour=0, minute=0, second=0,
                  microsecond=0), "daily", 0, lista_nazioni, fonte)
@@ -116,6 +124,17 @@ def agg_data_fonte(datastart: datetime, lista_nazioni: list[str], fonte: str, ho
     return stringa_1, stringa_2
 
 def invioMongo(lista, f):
+    if DRY_RUN:
+        nazioni = []
+        for doc in f:
+            nazione = doc.get("nazione")
+            if nazione and nazione not in nazioni:
+                nazioni.append(nazione)
+        for naz in nazioni:
+            if naz not in lista:
+                lista.append(naz)
+        print(f"DRY_RUN invioMongo skipped records={len(f)} nazioni={nazioni}", flush=True)
+        return
     l = pla(f)
     for naz in l:
         if naz not in lista:

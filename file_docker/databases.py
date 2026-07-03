@@ -1,4 +1,5 @@
 from configs import mongo_MS, mongo_SSDB
+from settings import DRY_RUN
 
 historical=mongo_SSDB.historical_raw_data #raw data senza expire
 raw=mongo_SSDB.raw_data
@@ -85,32 +86,33 @@ sqrminute=mongo_SSDB.square_minute_avg
 msp_coll = mongo_MS.milano_smart_park
 eea_coll = mongo_MS.eea
 
-raw.create_index("timestamp", expireAfterSeconds=7776000)
+if not DRY_RUN:
+    raw.create_index("timestamp", expireAfterSeconds=7776000)
 
-cha.create_index("timestamp", expireAfterSeconds=31536000)
-cda.create_index("timestamp", expireAfterSeconds=31536000)
+    cha.create_index("timestamp", expireAfterSeconds=31536000)
+    cda.create_index("timestamp", expireAfterSeconds=31536000)
 
-kha.create_index("timestamp", expireAfterSeconds=31536000)
-kda.create_index("timestamp", expireAfterSeconds=31536000)
-kma.create_index("timestamp", expireAfterSeconds=7776000)
-kia.create_index("timestamp", expireAfterSeconds=600)
+    kha.create_index("timestamp", expireAfterSeconds=31536000)
+    kda.create_index("timestamp", expireAfterSeconds=31536000)
+    kma.create_index("timestamp", expireAfterSeconds=7776000)
+    kia.create_index("timestamp", expireAfterSeconds=600)
 
-muniha.create_index("timestamp", expireAfterSeconds=31536000)
-munida.create_index("timestamp", expireAfterSeconds=31536000)
-munima.create_index("timestamp", expireAfterSeconds=7776000)
-muniia.create_index("timestamp", expireAfterSeconds=600)
+    muniha.create_index("timestamp", expireAfterSeconds=31536000)
+    munida.create_index("timestamp", expireAfterSeconds=31536000)
+    munima.create_index("timestamp", expireAfterSeconds=7776000)
+    muniia.create_index("timestamp", expireAfterSeconds=600)
 
-provha.create_index("timestamp", expireAfterSeconds=31536000)
-provda.create_index("timestamp", expireAfterSeconds=31536000)
-provia.create_index("timestamp", expireAfterSeconds=600)
+    provha.create_index("timestamp", expireAfterSeconds=31536000)
+    provda.create_index("timestamp", expireAfterSeconds=31536000)
+    provia.create_index("timestamp", expireAfterSeconds=600)
 
-regionha.create_index("timestamp", expireAfterSeconds=31536000)
-regionda.create_index("timestamp", expireAfterSeconds=31536000)
-regionia.create_index("timestamp", expireAfterSeconds=600)
+    regionha.create_index("timestamp", expireAfterSeconds=31536000)
+    regionda.create_index("timestamp", expireAfterSeconds=31536000)
+    regionia.create_index("timestamp", expireAfterSeconds=600)
 
-stateha.create_index("timestamp", expireAfterSeconds=31536000)
-stateda.create_index("timestamp", expireAfterSeconds=31536000)
-stateia.create_index("timestamp", expireAfterSeconds=600)
+    stateha.create_index("timestamp", expireAfterSeconds=31536000)
+    stateda.create_index("timestamp", expireAfterSeconds=31536000)
+    stateia.create_index("timestamp", expireAfterSeconds=600)
 
-keyW.create_index("timestamp", expireAfterSeconds=31536000)
-keyR.create_index("timestamp", expireAfterSeconds=31536000)
+    keyW.create_index("timestamp", expireAfterSeconds=31536000)
+    keyR.create_index("timestamp", expireAfterSeconds=31536000)

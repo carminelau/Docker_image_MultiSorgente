@@ -1,0 +1,12 @@
+.git
+__pycache__/
+*.pyc
+*.pyo
+*.log
+log.txt
+log_agg_data_fonte.txt
+docker_manager.log*
+dati/
+SSDB/
+test/
+Backup2/

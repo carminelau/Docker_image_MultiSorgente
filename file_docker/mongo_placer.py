@@ -3,6 +3,7 @@ import datetime
 import json
 from aggregator import aggregate
 from configs import mongo_generico
+from settings import DRY_RUN
 
 def __init__():
     print('ciao')
@@ -317,6 +318,9 @@ def placer(arr):
             d[nazione].append(doc)
         else:
             d[nazione] = [doc]
+    if DRY_RUN:
+        print(f"DRY_RUN placer skipped fonte={fonte} records={len(arr)}", flush=True)
+        return list(d.keys())
     if flag:
         for t in ["daily", "hourly"]:
             db = get_db(t, fonte)
@@ -349,6 +353,9 @@ def pla(arr):
             d[nazione].append(doc)
         else:
             d[nazione] = [doc]
+    if DRY_RUN:
+        print(f"DRY_RUN pla skipped fonte={fonte} records={len(arr)}", flush=True)
+        return list(d.keys())
     for t in ["daily", "hourly"]:            
         for naz in d.keys():
             db = get_db(t, fonte)
